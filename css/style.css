@@ -1,0 +1,115 @@
+html {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    width: 100% !important;
+    margin: 0;
+    /*padding-right: 1%;*/
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+header img {
+    width: 10%;
+    margin-left: 2%;
+}
+
+* {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #303841;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-size: 150%;
+}
+
+.navbar {
+    margin-right: 2%;
+    display: flex;
+    width: 40%;
+    text-align: end;
+    align-items: center;
+    justify-content: end;
+}
+
+.navbar a {
+    position: relative;
+    text-decoration: none;
+    color: white;
+    margin-left: 5%;
+    margin-right: 5%;
+    font-size: 1.5vw;
+}
+
+.navbar a::before {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: white;
+    transition: width 0.15s ease-in-out;
+}
+
+.navbar a:hover::before {
+    width: 100%;
+}
+
+.navbar a.active::before {
+    width: 100%;
+}
+
+.search {
+    width: 70%;
+    color: white;
+    display: flex;
+    justify-content: center
+}
+
+#search {
+    width: 60%;
+    padding: 1.4%;
+    padding-top: 1.75%;
+    outline: none;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50em;
+    transition: border 0.2s ease;
+}
+
+#search:focus {
+    border: 3px solid #c3c3c3;
+}
+
+input::placeholder {
+    padding-left: 5%;
+    font-size: 1.2em;
+    background-image: url(../img/magnifying-glass-duotone.svg);
+    background-repeat: no-repeat;
+    background-size: 1.2em;
+}
+
+
+.profile-pic {
+    border-radius: 50%;
+    width: 45%;
+    margin: 0;
+}
+
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 10%;
+}
