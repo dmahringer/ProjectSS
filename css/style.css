@@ -101,10 +101,14 @@ input::placeholder {
     background-size: 1.2em;
 }
 
+input {
+    color: white;
+}
+
 
 .profile-pic {
     border-radius: 50%;
-    width: 45%;
+    width: 2.5vw;
     margin: 0;
 }
 
@@ -112,4 +116,192 @@ input::placeholder {
     display: flex;
     align-items: center;
     gap: 10%;
+}
+
+
+.container {
+    color: white;
+    font-size: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5%;
+}
+
+.container h1 {
+    color: #F6C90E;
+    font-size: 3vw;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 2%;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 5% 0;
+}
+
+.button {
+    border: 2px solid #F6C90E;
+    border-radius: 50em;
+    color: #F6C90E !important;
+    font-size: 200% !important;
+    padding: 1% 5%;
+    margin: 0.5%;
+    transition: background-color 0.2s ease;
+    text-decoration: none !important;
+}
+
+.button:hover {
+    background-color: #F6C90E;
+    color: #303841 !important;
+}
+
+.button-container p {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 120%;
+}
+
+.button-container a {
+    color: #00B3FF;
+    font-size: 120%;
+    text-decoration: underline;
+}
+
+/****** Register and Login ******/
+
+/* General form styling */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    background-color: #303841;
+    padding: 2em;
+    border-radius: 1em;
+    width: 50%;
+    margin: auto;
+    margin-top: 3%;
+}
+
+.form-container h1 {
+    color: #F6C90E;
+    font-size: 3vw;
+    margin-bottom: 2%;
+}
+
+/* Input field styling */
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container input[type="date"],
+.form-container input[type="number"],
+.form-container select {
+    width: 50%;
+    padding: 0.5em;
+    padding: 1em 0.8em;
+    border: none;
+    border-radius: 5em;
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+}
+
+/* Submit button styling */
+.form-container input[type="submit"] {
+    border: 2px solid #F6C90E;
+    border-radius: 50em;
+    color: #F6C90E;
+    font-size: 180%;
+    padding: 1% 5%;
+    margin: 0.5%;
+    transition: background-color 0.2s ease;
+    text-decoration: none;
+    cursor: pointer;
+    width: 40%;
+}
+
+.form-container input[type="submit"]:hover {
+    background-color: #F6C90E;
+    color: #303841;
+}
+
+.no-magnifying-glass::placeholder {
+    background-image: none;
+    padding: 0;
+}
+
+
+/********** Profile **********/
+
+.profile-pic-big {
+    width: 11vw !important;
+}
+
+.logout {
+    padding: 0 4vw;
+}
+
+
+/********** Trader **********/
+.trader h1 {
+    align-self: flex-start;
+    color: white;
+    font-size: 1.5vw;
+    margin-bottom: 1%;
+    opacity: 0.8;
+    padding-left: 2% !important;
+}
+
+.container ul {
+    width: 100%; /* Make the list take up the entire width of the screen */
+}
+
+.container ul li {
+    width: 96%; /* Make the list items take up the entire width of the screen */
+    padding-left: 2%;
+    padding-right: 2%;
+    display: flex; /* Make the list item a flex container */
+    justify-content: space-between; /* Distribute the space evenly between the flex items */
+    background-color: #303841; /* Set the background color of every list item to the standard background color */
+}
+
+.container ul li:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05); /* Set the background color of every other list item to white with 5% opacity */
+}
+.container ul li:nth-child(even) span {
+    background-color: rgba(255, 255, 255, 0.0);
+}
+.container ul li:nth-child(even) a {
+    background-color: rgba(255, 255, 255, 0.0);
+}
+
+.container ul li .price {
+    display: inline-block;
+}
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+
+/********** Coin Details **********/
+
+.detail-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    background-color: #303841;
+    padding: 2em;
+    border-radius: 1em;
+    width: 50%;
+    margin: auto;
 }
