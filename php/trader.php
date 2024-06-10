@@ -26,13 +26,19 @@ if (!isset($_SESSION['id'])) {
 }
 
 // Fetch all the coins that the user owns along with the latest price and the price change in the last 24 hours
-$sql = "SELECT coin.id, coin.name, transaction.amount,
+$sql = "SELECT coin.id, coin.name, SUM(transaction.amount) as total_amount,
         (SELECT price FROM price_history WHERE coin_id = coin.id ORDER BY timestamp DESC LIMIT 1) as price,
-        ((SELECT price FROM price_history WHERE coin_id = coin.id ORDER BY timestamp DESC LIMIT 1) -
-        (SELECT price FROM price_history WHERE coin_id = coin.id AND timestamp >= DATE_SUB(NOW(), INTERVAL 24 HOUR) ORDER BY timestamp ASC LIMIT 1)) as price_change
+        (((SELECT price FROM price_history WHERE coin_id = coin.id ORDER BY timestamp DESC LIMIT 1) -
+        (SELECT price FROM price_history WHERE coin_id = coin.id AND timestamp = transaction.date_purchased)) /
+        (SELECT price FROM price_history WHERE coin_id = coin.id AND timestamp = transaction.date_purchased) * 100) as price_change,
+        SUM(transaction.amount) * (SELECT price FROM price_history WHERE coin_id = coin.id ORDER BY timestamp DESC LIMIT 1) as total_amount_in_usd
         FROM transaction
         JOIN coin ON transaction.coin_id = coin.id
-        WHERE transaction.user_id = ?";
+        WHERE transaction.user_id = ?
+        GROUP BY coin.id
+        ORDER BY total_amount DESC";
+
+
 $stmt = $conn->prepare($sql);
 if ($stmt === false) {
     die("Error: " . $conn->error);
@@ -41,6 +47,26 @@ $stmt->bind_param("i", $_SESSION['id']);
 $stmt->execute();
 $result = $stmt->get_result();
 $ownedCoins = $result->fetch_all(MYSQLI_ASSOC);
+
+// Fetch the total balance of all the user's belongings
+$sql = "SELECT SUM(total_amount_in_usd) as total_balance
+        FROM (
+            SELECT SUM(transaction.amount) * (SELECT price FROM price_history WHERE coin_id = coin.id ORDER BY timestamp DESC LIMIT 1) as total_amount_in_usd
+            FROM transaction
+            JOIN coin ON transaction.coin_id = coin.id
+            WHERE transaction.user_id = ?
+            GROUP BY coin.id
+        ) as subquery";
+
+$stmt = $conn->prepare($sql);
+if ($stmt === false) {
+    die("Error: " . $conn->error);
+}
+$stmt->bind_param("i", $_SESSION['id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$totalBalance = $result->fetch_assoc()['total_balance'];
+
 
 // Fetch all the coins available for purchase along with the latest price and the price change in the last 24 hours
 $sql = "SELECT coin.id, coin.name,
@@ -66,7 +92,7 @@ $conn->close();
     <img src="../img/logo.png">
 
     <div class="search">
-        <input type="text" id="search" name="search" placeholder="Search fro Users, Cryptos, etc.">
+        <input type="text" id="search" name="search" placeholder="Search for Users, Cryptos, etc.">
     </div>
 
     <div class="navbar">
@@ -82,17 +108,32 @@ $conn->close();
 </header>
 <body>
 <div class="container trader">
+    <h2 style="color: #F6C90E;">Balance: <?php echo number_format($totalBalance, 2); ?> $</h2>
+    <br>
     <h1>Your Coins</h1>
     <ul>
         <?php foreach ($ownedCoins as $coin): ?>
-            <li><a href="coin_details.php?id=<?php echo $coin['id']; ?>"><?php echo $coin['name']; ?></a> <span class="amount"><?php echo $coin['amount']; ?></span> <span class="<?php echo $coin['price_change'] >= 0 ? 'positive' : 'negative'; ?>"><?php echo number_format($coin['price_change'], 2); ?>%</span></li>
+            <li><div style="display: flex; align-items: center;">
+                    <img class="coin-logo" src="../img/<?php echo $coin['id']; ?>.png" alt="<?php echo $coin['name']; ?> logo">
+                    <a href="coin_details.php?id=<?php echo $coin['id']; ?>">
+                        <?php echo $coin['name']; ?>
+                    </a>
+                </div> <span class="total-amount-in-usd"><?php echo number_format($coin['total_amount_in_usd'], 2); ?> $</span> <span class="<?php echo $coin['price_change'] >= 0 ? 'positive' : 'negative'; ?>"><?php echo number_format($coin['price_change'], 2); ?>%</span></li>
         <?php endforeach; ?>
     </ul>
+
+    <br>
+    <br>
 
     <h1>Available Coins</h1>
     <ul>
         <?php foreach ($availableCoins as $coin): ?>
-            <li><a href="coin_details.php?id=<?php echo $coin['id']; ?>"><?php echo $coin['name']; ?></a> <span class="price"><?php echo $coin['price']; ?> $</span> <span class="<?php echo $coin['price_change'] >= 0 ? 'positive' : 'negative'; ?>"><?php echo number_format($coin['price_change'], 2); ?>%</span></li>
+            <li><div style="display: flex; align-items: center;">
+                    <img class="coin-logo" src="../img/<?php echo $coin['id']; ?>.png" alt="<?php echo $coin['name']; ?> logo">
+                    <a href="coin_details.php?id=<?php echo $coin['id']; ?>">
+                        <?php echo $coin['name']; ?>
+                    </a>
+                </div> <span class="price"><?php echo $coin['price']; ?> $</span> <span class="<?php echo $coin['price_change'] >= 0 ? 'positive' : 'negative'; ?>"><?php echo number_format($coin['price_change'], 2); ?>%</span></li>
         <?php endforeach; ?>
     </ul>
 </div>

@@ -42,7 +42,7 @@ $conn->close();
     <img src="../img/logo.png">
 
     <div class="search">
-        <input type="text" id="search" name="search" placeholder="Search fro Users, Cryptos, etc.">
+        <input type="text" id="search" name="search" placeholder="Search for Users, Cryptos, etc.">
     </div>
 
     <div class="navbar">
@@ -57,15 +57,30 @@ $conn->close();
     </div>
 </header>
 <body>
-<div class="form-container">
+<div class="form-container detail-form">
     <h1><?php echo $coin['name']; ?></h1>
-    <p><?php echo $coin['description']; ?></p>
-    <form action="buy_coin.php" method="post" class="detail-form-container">
-        <input type="hidden" name="user_id" value="<?php echo $user['id'] ?>">
-        <input type="hidden" name="coin_id" value="<?php echo $coin['id']; ?>">
-        <input type="number" name="amount" min="1" placeholder="Amount to buy" class="no-magnifying-glass">
-        <input type="submit" value="Buy">
-    </form>
-</div>
+    <div class="detail-row">
+        <p><?php echo $coin['description']; ?></p>
+
+        <div class="trade-container">
+            <form action="buy_coin.php" method="post" class="detail-form-container">
+                <input type="hidden" name="user_id" value="<?php echo $user['id'] ?>">
+                <input type="hidden" name="coin_id" value="<?php echo $coin['id']; ?>">
+                <input type="number" name="amount" min="1" placeholder="Amount to buy" class="no-magnifying-glass">
+                <input type="submit" value="Buy">
+            </form>
+        </div>
+
+        <div class="trade-container">
+            <form action="sell_coin.php" method="post" class="detail-form-container">
+                <input type="hidden" name="user_id" value="<?php echo $user['id'] ?>">
+                <input type="hidden" name="coin_id" value="<?php echo $coin['id']; ?>">
+                <input type="number" name="amount" min="1" placeholder="Amount to sell" class="no-magnifying-glass">
+                <input type="submit" value="Sell">
+            </form>
+
+        </div>
+    </div>
+
 </body>
 </html>

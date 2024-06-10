@@ -13,7 +13,7 @@
     <img src="../img/logo.png">
 
     <div class="search">
-            <input type="text" id="search" name="search" placeholder="Search fro Users, Cryptos, etc.">
+            <input type="text" id="search" name="search" placeholder="Search for Users, Cryptos, etc.">
     </div>
 
     <div class="navbar">
@@ -29,7 +29,7 @@
 <body>
     <div class="container">
         <h1>Start your trading journey now!</h1>
-        <p>nice welcome text with a very useful text, which explains how this site works and is fascinating.</p>
+        <p style="padding: 0 20%; text-align: center">We're glad to have you here. Our platform allows you to trade various cryptocurrencies at real-time market prices. Start trading now and make the most out of your investments.</p>
     </div>
 
     <div class="button-container">

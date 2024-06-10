@@ -26,7 +26,7 @@ if ($_SESSION['loggedin']) {
         <img src="../img/logo.png">
 
         <div class="search">
-            <input type="text" id="search" name="search" placeholder="Search fro Users, Cryptos, etc.">
+            <input type="text" id="search" name="search" placeholder="Search for Users, Cryptos, etc.">
         </div>
 
         <div class="navbar">
@@ -68,7 +68,7 @@ if ($_SESSION['loggedin']) {
         <img src="../img/logo.png">
 
         <div class="search">
-            <input type="text" id="search" name="search" placeholder="Search fro Users, Cryptos, etc.">
+            <input type="text" id="search" name="search" placeholder="Search for Users, Cryptos, etc.">
         </div>
 
         <div class="navbar">
